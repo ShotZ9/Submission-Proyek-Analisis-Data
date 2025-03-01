@@ -20,9 +20,6 @@ data = load_data()
 st.sidebar.title("Pengaturan")
 st.sidebar.subheader("Filter Data")
 
-if st.sidebar.button("Reset Filter"):
-    st.session_state.filtered = False
-
 # Filter berdasarkan tanggal
 min_date = data['dteday'].min()
 max_date = data['dteday'].max()
@@ -39,6 +36,9 @@ season_options = {
 selected_season = st.sidebar.selectbox("Pilih Musim", options=list(season_options.keys()), format_func=lambda x: season_options[x])
 
 # Tombol filter
+if st.sidebar.button("Reset Filter"):
+    st.session_state.filtered = False
+    
 if st.sidebar.button("Terapkan Filter"):
     st.session_state.filtered = True
 
