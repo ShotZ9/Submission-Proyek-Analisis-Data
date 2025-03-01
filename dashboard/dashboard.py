@@ -35,13 +35,15 @@ season_options = {
 }
 selected_season = st.sidebar.selectbox("Pilih Musim", options=list(season_options.keys()), format_func=lambda x: season_options[x])
 
-# Tombol filter
-if st.sidebar.button("Reset Filter"):
-    st.session_state.filtered = False
-    
-if st.sidebar.button("Terapkan Filter"):
-    st.session_state.filtered = True
+col1, col2 = st.sidebar.columns(2)
+with col1:
+    if st.button("Reset Filter"):
+        st.session_state.filtered = False
+with col2:
+    if st.button("Terapkan Filter"):
+        st.session_state.filtered = True
 
+# Inisialisasi session state untuk status filter
 if 'filtered' not in st.session_state:
     st.session_state.filtered = False
 
