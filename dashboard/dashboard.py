@@ -3,26 +3,25 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Konfigurasi halaman
 st.set_page_config(
     page_title="Dashboard Analisis Penyewaan Sepeda",
     page_icon="🚴‍♂️",
     layout="wide",
 )
 
-# Load data
 @st.cache_data
 def load_data():
     data = pd.read_csv('dashboard/main_data.csv')
-    # Ubah kolom 'dteday' ke format datetime
     data['dteday'] = pd.to_datetime(data['dteday'])
     return data
 
 data = load_data()
 
-# Sidebar untuk filter interaktif
 st.sidebar.title("Pengaturan")
 st.sidebar.subheader("Filter Data")
+
+if st.sidebar.button("Reset Filter"):
+    st.session_state.filtered = False
 
 # Filter berdasarkan tanggal
 min_date = data['dteday'].min()
@@ -39,12 +38,21 @@ season_options = {
 }
 selected_season = st.sidebar.selectbox("Pilih Musim", options=list(season_options.keys()), format_func=lambda x: season_options[x])
 
-# Filter data berdasarkan tanggal dan musim
-filtered_data = data[
-    (data['dteday'] >= pd.to_datetime(start_date)) &
-    (data['dteday'] <= pd.to_datetime(end_date)) &
-    (data['season_hour'] == selected_season)
-]
+# Tombol filter
+if st.sidebar.button("Terapkan Filter"):
+    st.session_state.filtered = True
+
+if 'filtered' not in st.session_state:
+    st.session_state.filtered = False
+
+if st.session_state.filtered:
+    filtered_data = data[
+        (data['dteday'] >= pd.to_datetime(start_date)) &
+        (data['dteday'] <= pd.to_datetime(end_date)) &
+        (data['season_hour'] == selected_season)
+    ]
+else:
+    filtered_data = data
 
 # Judul Dashboard
 st.title("🚴‍♂️ Dashboard Analisis Penyewaan Sepeda")
@@ -53,7 +61,7 @@ st.markdown("""
     Gunakan filter di sidebar untuk menyesuaikan data yang ditampilkan.
 """)
 
-# Visualisasi 1: Tren Penggunaan Sepeda per Hari
+# Visualisasi 1
 st.subheader("📈 Tren Penggunaan Sepeda per Hari")
 daily_data = filtered_data.groupby('dteday')['cnt_hour'].sum().reset_index()
 fig, ax = plt.subplots(figsize=(10, 4))
@@ -64,7 +72,7 @@ ax.set_ylabel('Jumlah Penggunaan Sepeda', fontsize=12)
 ax.grid(True, linestyle='--', alpha=0.7)
 st.pyplot(fig, clear_figure=True)
 
-# Visualisasi 2: Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur
+# Visualisasi 2
 st.subheader("📊 Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur")
 workingday_data = filtered_data.groupby('workingday_hour')['cnt_hour'].mean().reset_index()
 fig, ax = plt.subplots(figsize=(6, 4))
