@@ -104,20 +104,6 @@ st.pyplot(fig, clear_figure=True)
 
 # Visualisasi 2: Tren Penggunaan Sepeda per Jam
 st.subheader("🕒 Tren Penggunaan Sepeda per Jam")
-hour_data = filtered_data.groupby(['dteday', 'hr'])['cnt_hour'].sum().reset_index()
-plt.figure(figsize=(10, 6))
-plt.plot(hour_data['dteday'], hour_data['cnt_hour'], label='Penggunaan per Jam', color='green', linewidth=2)
-plt.xlabel('Tanggal', fontsize=12)
-plt.ylabel('Jumlah Penyewaan', fontsize=12)
-plt.title('Tren Penggunaan Sepeda per Jam', fontsize=16)
-plt.xticks(rotation=45)
-plt.grid(True, linestyle='--', alpha=0.7)
-plt.legend()
-plt.tight_layout()
-st.pyplot(plt, clear_figure=True)
-
-# Visualisasi 2: Tren Penggunaan Sepeda per Jam
-st.subheader("🕒 Tren Penggunaan Sepeda per Jam")
 hourly_data = filtered_data.groupby('hr')['cnt_hour'].sum().reset_index()
 fig, ax = plt.subplots(figsize=(10, 4))
 sns.lineplot(x='hr', y='cnt_hour', data=hourly_data, color='green', linewidth=2.5, ax=ax)
