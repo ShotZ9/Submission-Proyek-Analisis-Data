@@ -27,9 +27,8 @@ start_date = st.sidebar.date_input("Tanggal Mulai", min_date, min_value=min_date
 end_date = st.sidebar.date_input("Tanggal Akhir", max_date, min_value=min_date, max_value=max_date)
 
 # Filter berdasarkan rentang jam (0-23)
-st.sidebar.subheader("Pilih Rentang Jam")
 hour_range = st.sidebar.slider(
-    "Rentang Jam",
+    "Rentang Jam (Pastikan tanggal mulai dan akhir sama)",
     min_value=0,
     max_value=23,
     value=(0, 23))
