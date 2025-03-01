@@ -23,15 +23,15 @@ st.sidebar.subheader("Filter Data")
 # Filter berdasarkan tanggal
 min_date = data['dteday'].min()
 max_date = data['dteday'].max()
-start_date = st.sidebar.date_input("Tanggal Mulai", min_date, min_value=min_date, max_value=max_date)
-end_date = st.sidebar.date_input("Tanggal Akhir", max_date, min_value=min_date, max_value=max_date)
+selected_date = st.sidebar.date_input("Pilih Tanggal", min_date, min_value=min_date, max_value=max_date)
 
 # Filter berdasarkan rentang jam (0-23)
+st.sidebar.subheader("Pilih Rentang Jam")
 hour_range = st.sidebar.slider(
-    "Rentang Jam (Pastikan tanggal mulai dan akhir sama)",
+    "Rentang Jam",
     min_value=0,
     max_value=23,
-    value=(0, 23))
+    value=(0, 23))  # Default: rentang penuh (0-23)
 
 # Filter berdasarkan musim (season) dengan opsi "None"
 season_options = {
@@ -69,8 +69,7 @@ if 'filtered' not in st.session_state:
 # Filter data berdasarkan tanggal, rentang jam, musim, dan cuaca jika tombol filter diklik
 if st.session_state.filtered:
     filtered_data = data[
-        (data['dteday'] >= pd.to_datetime(start_date)) &
-        (data['dteday'] <= pd.to_datetime(end_date)) &
+        (data['dteday'] == pd.to_datetime(selected_date)) &
         (data['hr'] >= hour_range[0]) &
         (data['hr'] <= hour_range[1])
     ]
