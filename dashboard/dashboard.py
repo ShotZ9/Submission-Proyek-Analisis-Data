@@ -28,7 +28,6 @@ selected_date = st.sidebar.date_input("Pilih Tanggal", min_date, min_value=min_d
 # Filter berdasarkan rentang jam (0-23)
 st.sidebar.subheader("Pilih Rentang Jam")
 hour_range = st.sidebar.slider(
-    "Rentang Jam",
     min_value=0,
     max_value=23,
     value=(0, 23))  # Default: rentang penuh (0-23)
