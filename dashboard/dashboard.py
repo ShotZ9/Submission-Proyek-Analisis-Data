@@ -26,9 +26,13 @@ max_date = data['dteday'].max()
 start_date = st.sidebar.date_input("Tanggal Mulai", min_date, min_value=min_date, max_value=max_date)
 end_date = st.sidebar.date_input("Tanggal Akhir", max_date, min_value=min_date, max_value=max_date)
 
-# Filter berdasarkan jam (default: 12 AM / jam 0)
-hour_options = list(range(24))  # Jam 0-23
-selected_hour = st.sidebar.selectbox("Pilih Jam", options=hour_options, index=0)  # Default: jam 0 (12 AM)
+# Filter berdasarkan rentang jam (0-23)
+st.sidebar.subheader("Pilih Rentang Jam")
+hour_range = st.sidebar.slider(
+    "Rentang Jam",
+    min_value=0,
+    max_value=23,
+    value=(0, 23))
 
 # Filter berdasarkan musim (season) dengan opsi "None"
 season_options = {
@@ -63,12 +67,13 @@ with col2:
 if 'filtered' not in st.session_state:
     st.session_state.filtered = False
 
-# Filter data berdasarkan tanggal, jam, musim, dan cuaca jika tombol filter diklik
+# Filter data berdasarkan tanggal, rentang jam, musim, dan cuaca jika tombol filter diklik
 if st.session_state.filtered:
     filtered_data = data[
         (data['dteday'] >= pd.to_datetime(start_date)) &
         (data['dteday'] <= pd.to_datetime(end_date)) &
-        (data['hr'] == selected_hour)
+        (data['hr'] >= hour_range[0]) &
+        (data['hr'] <= hour_range[1])
     ]
     
     if selected_season != "None":
@@ -99,14 +104,17 @@ st.pyplot(fig, clear_figure=True)
 
 # Visualisasi 2: Tren Penggunaan Sepeda per Jam
 st.subheader("🕒 Tren Penggunaan Sepeda per Jam")
-hourly_data = filtered_data.groupby('hr')['cnt_hour'].sum().reset_index()
-fig, ax = plt.subplots(figsize=(10, 4))
-sns.lineplot(x='hr', y='cnt_hour', data=hourly_data, color='green', linewidth=2.5, ax=ax)
-ax.set_title('Tren Penggunaan Sepeda per Jam', fontsize=14)
-ax.set_xlabel('Jam', fontsize=12)
-ax.set_ylabel('Jumlah Penggunaan Sepeda', fontsize=12)
-ax.grid(True, linestyle='--', alpha=0.7)
-st.pyplot(fig, clear_figure=True)
+hour_data = filtered_data.groupby(['dteday', 'hr'])['cnt_hour'].sum().reset_index()
+plt.figure(figsize=(10, 6))
+plt.plot(hour_data['dteday'], hour_data['cnt_hour'], label='Penggunaan per Jam', color='green', linewidth=2)
+plt.xlabel('Tanggal', fontsize=12)
+plt.ylabel('Jumlah Penyewaan', fontsize=12)
+plt.title('Tren Penggunaan Sepeda per Jam', fontsize=16)
+plt.xticks(rotation=45)
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.legend()
+plt.tight_layout()
+st.pyplot(plt, clear_figure=True)
 
 # Visualisasi 3: Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur
 st.subheader("📊 Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur")
