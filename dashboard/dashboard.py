@@ -14,6 +14,8 @@ st.set_page_config(
 @st.cache_data
 def load_data():
     data = pd.read_csv('dashboard/main_data.csv')
+    # Ubah kolom 'dteday' ke format datetime
+    data['dteday'] = pd.to_datetime(data['dteday'])
     return data
 
 data = load_data()
