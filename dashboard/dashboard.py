@@ -96,16 +96,19 @@ st.markdown("""
     Gunakan filter di sidebar untuk menyesuaikan data yang ditampilkan.
 """)
 
-# Visualisasi 1: Tren Penggunaan Sepeda per Hari
-st.subheader("📈 Tren Penggunaan Sepeda per Hari")
-daily_data = filtered_data.groupby('dteday')['cnt_hour'].sum().reset_index()
-fig, ax = plt.subplots(figsize=(10, 4))
-sns.lineplot(x='dteday', y='cnt_hour', data=daily_data, color='blue', linewidth=2.5, ax=ax)
-ax.set_title('Tren Penggunaan Sepeda per Hari', fontsize=14)
-ax.set_xlabel('Tanggal', fontsize=12)
-ax.set_ylabel('Jumlah Penggunaan Sepeda', fontsize=12)
-ax.grid(True, linestyle='--', alpha=0.7)
-st.pyplot(fig, clear_figure=True)
+# Visualisasi 1: Tren Penggunaan Sepeda per Hari (hanya muncul jika rentang tanggal lebih dari 1 hari)
+if start_date != end_date:
+    st.subheader("📈 Tren Penggunaan Sepeda per Hari")
+    daily_data = filtered_data.groupby('dteday')['cnt_hour'].sum().reset_index()
+    fig, ax = plt.subplots(figsize=(10, 4))
+    sns.lineplot(x='dteday', y='cnt_hour', data=daily_data, color='blue', linewidth=2.5, ax=ax)
+    ax.set_title('Tren Penggunaan Sepeda per Hari', fontsize=14)
+    ax.set_xlabel('Tanggal', fontsize=12)
+    ax.set_ylabel('Jumlah Penggunaan Sepeda', fontsize=12)
+    ax.grid(True, linestyle='--', alpha=0.7)
+    st.pyplot(fig, clear_figure=True)
+else:
+    st.info("Visualisasi Tren Penggunaan Sepeda per Hari tidak tersedia karena tanggal mulai dan tanggal akhir sama.")
 
 # Visualisasi 2: Tren Penggunaan Sepeda per Jam
 st.subheader("🕒 Tren Penggunaan Sepeda per Jam")
