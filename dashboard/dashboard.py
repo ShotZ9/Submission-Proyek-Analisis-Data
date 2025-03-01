@@ -7,6 +7,7 @@ import seaborn as sns
 st.set_page_config(
     page_title="Dashboard Analisis Penyewaan Sepeda",
     page_icon="🚴‍♂️",
+    layout="wide",
 )
 
 # Load data
