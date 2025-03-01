@@ -26,7 +26,6 @@ max_date = data['dteday'].max()
 start_date = st.sidebar.date_input("Tanggal Mulai", min_date, min_value=min_date, max_value=max_date)
 end_date = st.sidebar.date_input("Tanggal Akhir", max_date, min_value=min_date, max_value=max_date)
 
-# Validasi tanggal
 if start_date > end_date:
     st.sidebar.error("Tanggal Mulai tidak boleh lebih besar dari Tanggal Akhir.")
 else:
@@ -63,7 +62,7 @@ selected_weather = st.sidebar.selectbox("Pilih Cuaca", options=list(weather_opti
 col1, col2 = st.sidebar.columns(2)
 with col1:
     if st.button("Reset Filter"):
-        st.session_state.filtered = False
+        st.session_state.filtered = False  # Reset status filter
 with col2:
     if st.button("Terapkan Filter"):
         st.session_state.filtered = True
@@ -96,8 +95,8 @@ st.markdown("""
     Gunakan filter di sidebar untuk menyesuaikan data yang ditampilkan.
 """)
 
-# Visualisasi 1: Tren Penggunaan Sepeda per Hari (hanya muncul jika rentang tanggal lebih dari 1 hari)
-if start_date != end_date:
+# Visualisasi 1: Tren Penggunaan Sepeda per Hari
+if not st.session_state.filtered or start_date != end_date:
     st.subheader("📈 Tren Penggunaan Sepeda per Hari")
     daily_data = filtered_data.groupby('dteday')['cnt_hour'].sum().reset_index()
     fig, ax = plt.subplots(figsize=(10, 4))
