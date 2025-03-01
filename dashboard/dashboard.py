@@ -35,6 +35,15 @@ season_options = {
 }
 selected_season = st.sidebar.selectbox("Pilih Musim", options=list(season_options.keys()), format_func=lambda x: season_options[x])
 
+# Filter berdasarkan cuaca (weathersit)
+weather_options = {
+    1: "Cerah",
+    2: "Berkabut/Berawan",
+    3: "Hujan Ringan/Salju Ringan",
+    4: "Hujan Lebat/Salju Lebat"
+}
+selected_weather = st.sidebar.selectbox("Pilih Cuaca", options=list(weather_options.keys()), format_func=lambda x: weather_options[x])
+
 col1, col2 = st.sidebar.columns(2)
 with col1:
     if st.button("Reset Filter"):
