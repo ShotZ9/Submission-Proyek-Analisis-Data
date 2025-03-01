@@ -32,13 +32,13 @@ st.markdown("""
 if st.sidebar.checkbox("Tren Penggunaan Sepeda per Hari"):
     st.subheader("📈 Tren Penggunaan Sepeda per Hari")
     daily_data = data.groupby('dteday')['cnt_hour'].sum().reset_index()
-    plt.figure(figsize=(12, 6))
-    sns.lineplot(x='dteday', y='cnt_hour', data=daily_data, color='blue', linewidth=2.5)
-    plt.title('Tren Penggunaan Sepeda per Hari', fontsize=16)
-    plt.xlabel('Tanggal', fontsize=14)
-    plt.ylabel('Jumlah Penggunaan Sepeda', fontsize=14)
-    plt.grid(True, linestyle='--', alpha=0.7)
-    st.pyplot(plt)
+    fig, ax = plt.subplots(figsize=(10, 4))  # Ukuran gambar lebih kecil
+    sns.lineplot(x='dteday', y='cnt_hour', data=daily_data, color='blue', linewidth=2.5, ax=ax)
+    ax.set_title('Tren Penggunaan Sepeda per Hari', fontsize=14)
+    ax.set_xlabel('Tanggal', fontsize=12)
+    ax.set_ylabel('Jumlah Penggunaan Sepeda', fontsize=12)
+    ax.grid(True, linestyle='--', alpha=0.7)
+    st.pyplot(fig, clear_figure=True)  # Menghapus gambar setelah ditampilkan
     st.markdown("""
         **Insight:**
         - Tren penggunaan sepeda cenderung meningkat selama periode tertentu.
@@ -49,13 +49,14 @@ if st.sidebar.checkbox("Tren Penggunaan Sepeda per Hari"):
 if st.sidebar.checkbox("Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur"):
     st.subheader("📊 Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur")
     workingday_data = data.groupby('workingday_hour')['cnt_hour'].mean().reset_index()
-    plt.figure(figsize=(8, 6))
-    sns.barplot(x='workingday_hour', y='cnt_hour', data=workingday_data, palette='viridis')
-    plt.title('Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur', fontsize=16)
-    plt.xlabel('Hari Kerja (1) / Hari Libur (0)', fontsize=14)
-    plt.ylabel('Rata-rata Penggunaan Sepeda', fontsize=14)
-    plt.xticks([0, 1], ['Hari Libur', 'Hari Kerja'])
-    st.pyplot(plt)
+    fig, ax = plt.subplots(figsize=(6, 4))  # Ukuran gambar lebih kecil
+    sns.barplot(x='workingday_hour', y='cnt_hour', data=workingday_data, palette='viridis', ax=ax)
+    ax.set_title('Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur', fontsize=14)
+    ax.set_xlabel('Hari Kerja (1) / Hari Libur (0)', fontsize=12)
+    ax.set_ylabel('Rata-rata Penggunaan Sepeda', fontsize=12)
+    ax.set_xticks([0, 1])
+    ax.set_xticklabels(['Hari Libur', 'Hari Kerja'])
+    st.pyplot(fig, clear_figure=True)  # Menghapus gambar setelah ditampilkan
     st.markdown("""
         **Insight:**
         - Penggunaan sepeda lebih tinggi pada hari kerja dibandingkan hari libur.
@@ -66,13 +67,13 @@ if st.sidebar.checkbox("Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur"
 if st.sidebar.checkbox("Distribusi Penggunaan Sepeda per Jam"):
     st.subheader("⏰ Distribusi Penggunaan Sepeda per Jam")
     hourly_data = data.groupby('hr')['cnt_hour'].mean().reset_index()
-    plt.figure(figsize=(12, 6))
-    sns.lineplot(x='hr', y='cnt_hour', data=hourly_data, color='green', linewidth=2.5)
-    plt.title('Distribusi Penggunaan Sepeda per Jam', fontsize=16)
-    plt.xlabel('Jam', fontsize=14)
-    plt.ylabel('Rata-rata Penggunaan Sepeda', fontsize=14)
-    plt.grid(True, linestyle='--', alpha=0.7)
-    st.pyplot(plt)
+    fig, ax = plt.subplots(figsize=(10, 4))  # Ukuran gambar lebih kecil
+    sns.lineplot(x='hr', y='cnt_hour', data=hourly_data, color='green', linewidth=2.5, ax=ax)
+    ax.set_title('Distribusi Penggunaan Sepeda per Jam', fontsize=14)
+    ax.set_xlabel('Jam', fontsize=12)
+    ax.set_ylabel('Rata-rata Penggunaan Sepeda', fontsize=12)
+    ax.grid(True, linestyle='--', alpha=0.7)
+    st.pyplot(fig, clear_figure=True)  # Menghapus gambar setelah ditampilkan
     st.markdown("""
         **Insight:**
         - Penggunaan sepeda meningkat pada jam sibuk (pagi dan sore).
@@ -96,6 +97,6 @@ st.markdown("---")
 st.markdown("""
     **Dashboard dibuat oleh:**  
     - Nama: Yoel Amadeo Pratomo  
-    - Email: mc006d5y2438@student.devacademy.id  
+    - Email: yamadeo9@gmail.com / mc006d5y2438@student.devacademy.id  
     - ID Dicoding: MC006D5Y2438  
 """)
