@@ -26,4 +26,4 @@ Proyek ini menganalisis dataset Bike Sharing untuk memahami tren penggunaan sepe
 - Streamlit
 
 ## Tautan Dashboard
-Dashboard dapat diakses di: [DashboardProyekAnalisisData](https://submissionproyek1-yoel.streamlit.app)
+Dashboard dapat diakses di: [Dashboard Proyek Analisis Data](https://submissionproyek1-yoel.streamlit.app)
