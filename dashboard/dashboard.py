@@ -23,9 +23,15 @@ st.sidebar.subheader("Filter Data")
 # Filter berdasarkan rentang tanggal
 min_date = data['dteday'].min()
 max_date = data['dteday'].max()
-start_date = st.sidebar.date_input("Tanggal Mulai", min_date, min_value=min_date, max_value=max_date)
-end_date = st.sidebar.date_input("Tanggal Akhir", max_date, min_value=min_date, max_value=max_date)
 
+try:
+    start_date = st.sidebar.date_input("Tanggal Mulai", min_date, min_value=min_date, max_value=max_date)
+    end_date = st.sidebar.date_input("Tanggal Akhir", max_date, min_value=min_date, max_value=max_date)
+except Exception as e:
+    st.sidebar.error("Terjadi kesalahan dalam memilih tanggal. Pastikan tanggal yang dimasukkan valid.")
+    start_date, end_date = min_date, max_date  # Gunakan tanggal default jika terjadi error
+
+# Validasi tanggal
 if start_date > end_date:
     st.sidebar.error("Tanggal Mulai tidak boleh lebih besar dari Tanggal Akhir.")
 else:
@@ -86,7 +92,7 @@ if st.session_state.filtered:
     if selected_weather != "None":
         filtered_data = filtered_data[filtered_data['weathersit_hour'] == selected_weather]
 else:
-    filtered_data = data
+    filtered_data = data  # Kembalikan ke data awal jika filter direset
 
 # Judul Dashboard
 st.title("🚴‍♂️ Dashboard Analisis Penyewaan Sepeda")
