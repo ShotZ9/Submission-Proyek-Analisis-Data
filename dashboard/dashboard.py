@@ -49,13 +49,14 @@ if st.sidebar.checkbox("Tren Penggunaan Sepeda per Hari"):
 if st.sidebar.checkbox("Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur"):
     st.subheader("📊 Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur")
     workingday_data = data.groupby('workingday_hour')['cnt_hour'].mean().reset_index()
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(4, 3))
     sns.barplot(x='workingday_hour', y='cnt_hour', data=workingday_data, palette='viridis', ax=ax)
-    ax.set_title('Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur', fontsize=14)
-    ax.set_xlabel('Hari Libur (0) / Hari Kerja (1)', fontsize=12)
-    ax.set_ylabel('Rata-rata Penggunaan Sepeda', fontsize=12)
+    ax.set_title('Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur', fontsize=12)
+    ax.set_xlabel('Hari Libur (0) / Hari Kerja (1)', fontsize=10)
+    ax.set_ylabel('Rata-rata Penggunaan Sepeda', fontsize=10)
     ax.set_xticks([0, 1])
-    ax.set_xticklabels(['Hari Libur', 'Hari Kerja'])
+    ax.set_xticklabels(['Hari Libur', 'Hari Kerja'], fontsize=10)
+    plt.tight_layout()
     st.pyplot(fig, clear_figure=True)
     st.markdown("""
         **Insight:**
