@@ -80,6 +80,7 @@ workingday_data = filtered_data.groupby('workingday_hour')['cnt_hour'].mean().re
 fig, ax = plt.subplots(figsize=(6, 4))
 sns.barplot(x='workingday_hour', y='cnt_hour', data=workingday_data, palette='viridis', ax=ax)
 ax.set_title('Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur', fontsize=14)
+ax.set_xlabel('Hari Libur / Hari Kerja', fontsize=12)
 ax.set_ylabel('Rata-rata Penggunaan Sepeda', fontsize=12)
 ax.set_xticks([0, 1])
 ax.set_xticklabels(['Hari Libur', 'Hari Kerja'])
