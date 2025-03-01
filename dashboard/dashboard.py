@@ -26,8 +26,9 @@ max_date = data['dteday'].max()
 start_date = st.sidebar.date_input("Tanggal Mulai", min_date, min_value=min_date, max_value=max_date)
 end_date = st.sidebar.date_input("Tanggal Akhir", max_date, min_value=min_date, max_value=max_date)
 
-# Filter berdasarkan musim (season)
+# Filter berdasarkan musim (season) dengan opsi "None"
 season_options = {
+    "None": "Tidak Memilih Musim",
     1: "Spring",
     2: "Summer",
     3: "Fall",
@@ -35,8 +36,9 @@ season_options = {
 }
 selected_season = st.sidebar.selectbox("Pilih Musim", options=list(season_options.keys()), format_func=lambda x: season_options[x])
 
-# Filter berdasarkan cuaca (weathersit)
+# Filter berdasarkan cuaca (weathersit) dengan opsi "None"
 weather_options = {
+    "None": "Tidak Memilih Cuaca",
     1: "Cerah",
     2: "Berkabut/Berawan",
     3: "Hujan Ringan/Salju Ringan",
@@ -56,12 +58,18 @@ with col2:
 if 'filtered' not in st.session_state:
     st.session_state.filtered = False
 
+# Filter data berdasarkan tanggal, musim, dan cuaca jika tombol filter diklik
 if st.session_state.filtered:
     filtered_data = data[
         (data['dteday'] >= pd.to_datetime(start_date)) &
-        (data['dteday'] <= pd.to_datetime(end_date)) &
-        (data['season_hour'] == selected_season)
+        (data['dteday'] <= pd.to_datetime(end_date))
     ]
+    
+    if selected_season != "None":
+        filtered_data = filtered_data[filtered_data['season_hour'] == selected_season]
+    
+    if selected_weather != "None":
+        filtered_data = filtered_data[filtered_data['weathersit_hour'] == selected_weather]
 else:
     filtered_data = data
 
@@ -105,6 +113,8 @@ if st.sidebar.checkbox("Tampilkan Data yang Difilter"):
         - `hr`: Jam.
         - `cnt_hour`: Jumlah penyewaan sepeda per jam.
         - `workingday_hour`: Indikator hari kerja (1) atau hari libur (0).
+        - `season_hour`: Musim (1: Spring, 2: Summer, 3: Fall, 4: Winter).
+        - `weathersit_hour`: Kondisi cuaca (1: Cerah, 2: Berkabut/Berawan, 3: Hujan Ringan/Salju Ringan, 4: Hujan Lebat/Salju Lebat).
     """)
 
 # Footer
