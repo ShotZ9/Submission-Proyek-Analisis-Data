@@ -6,7 +6,6 @@ Proyek ini menganalisis dataset Bike Sharing untuk memahami tren penggunaan sepe
 ## Pertanyaan Bisnis
 1. Bagaimana tren penggunaan sepeda per hari dan per jam?
 2. Apakah ada perbedaan pola penggunaan sepeda antara hari kerja dan hari libur?
-3. Bagaimana pengaruh kondisi cuaca terhadap jumlah penyewaan sepeda?
 
 ## Cara Menjalankan Proyek
 1. **Menjalankan Notebook**:
@@ -22,7 +21,6 @@ Proyek ini menganalisis dataset Bike Sharing untuk memahami tren penggunaan sepe
 
 ## Library yang Digunakan
 - Pandas
-- NumPy
 - Matplotlib
 - Seaborn
 - Streamlit
