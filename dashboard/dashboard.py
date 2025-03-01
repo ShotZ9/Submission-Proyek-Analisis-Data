@@ -33,16 +33,11 @@ else:
     st.sidebar.success("Rentang tanggal valid.")
 
 # Filter berdasarkan rentang jam (0-23)
-st.sidebar.subheader("Pilih Rentang Jam")
-if start_date != end_date:
-    st.sidebar.warning("Harap pilih tanggal yang sama terlebih dahulu.")
-    hour_range = (0, 23)
-else:
-    hour_range = st.sidebar.slider(
-        "Rentang Jam",
-        min_value=0,
-        max_value=23,
-        value=(0, 23))  # Default: rentang penuh (0-23)
+hour_range = st.sidebar.slider(
+    "Rentang Jam",
+    min_value=0,
+    max_value=23,
+    value=(0, 23))  # Default: rentang penuh (0-23)
 
 # Filter berdasarkan musim (season) dengan opsi "None"
 season_options = {
