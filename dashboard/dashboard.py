@@ -14,8 +14,6 @@ st.set_page_config(
 @st.cache_data
 def load_data():
     data = pd.read_csv('dashboard/main_data.csv')
-    # Ubah kolom 'dteday' ke format datetime
-    data['dteday'] = pd.to_datetime(data['dteday'])
     return data
 
 data = load_data()
@@ -63,11 +61,6 @@ ax.set_xlabel('Tanggal', fontsize=12)
 ax.set_ylabel('Jumlah Penggunaan Sepeda', fontsize=12)
 ax.grid(True, linestyle='--', alpha=0.7)
 st.pyplot(fig, clear_figure=True)
-st.markdown("""
-    **Insight:**
-    - Tren penggunaan sepeda cenderung meningkat selama periode tertentu.
-    - Terlihat pola musiman dalam penggunaan sepeda.
-""")
 
 # Visualisasi 2: Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur
 st.subheader("📊 Pola Penggunaan Sepeda antara Hari Kerja dan Hari Libur")
@@ -80,11 +73,6 @@ ax.set_ylabel('Rata-rata Penggunaan Sepeda', fontsize=12)
 ax.set_xticks([0, 1])
 ax.set_xticklabels(['Hari Libur', 'Hari Kerja'])
 st.pyplot(fig, clear_figure=True)
-st.markdown("""
-    **Insight:**
-    - Penggunaan sepeda lebih tinggi pada hari kerja dibandingkan hari libur.
-    - Hal ini menunjukkan bahwa sepeda banyak digunakan untuk keperluan komuter.
-""")
 
 # Tampilkan data yang difilter
 if st.sidebar.checkbox("Tampilkan Data yang Difilter"):
