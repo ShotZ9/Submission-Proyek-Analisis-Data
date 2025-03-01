@@ -34,8 +34,8 @@ else:
 
 # Filter berdasarkan rentang jam (0-23)
 st.sidebar.subheader("Pilih Rentang Jam")
-if start_date > end_date:
-    st.sidebar.warning("Harap pilih rentang tanggal yang valid terlebih dahulu.")
+if start_date != end_date:
+    st.sidebar.warning("Harap pilih tanggal yang sama terlebih dahulu.")
     hour_range = (0, 23)
 else:
     hour_range = st.sidebar.slider(
